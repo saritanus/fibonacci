@@ -1,6 +1,6 @@
 package com.oracle.challenge.fibonacci.service;
 
-import com.oracle.challenge.fibonacci.excpetion.InvalidInputException;
+import com.oracle.challenge.fibonacci.exception.InvalidInputException;
 import com.oracle.challenge.fibonacci.model.FibonacciResponse;
 
 import java.util.ArrayList;
