@@ -1,10 +1,10 @@
 # Alpine based container with Java and Tomcat
-FROM centos:centos7.6.1810
+FROM centos:centos8.2.2004
 MAINTAINER Sarita Sethy
 
 # Prepare environment
-RUN mkdir -p /opt/nextlabs/fibonacci
-ENV FIBONACCI_INSTALL_DIR /opt/nextlabs/logger
+RUN mkdir -p /opt/oracle/fibonacci
+ENV FIBONACCI_INSTALL_DIR /opt/oracle/fibonacci
 ENV SPRING_CONFIG_LOCATION file:///$FIBONACCI_INSTALL_DIR/config
 ENV JAVA_HOME $FIBONACCI_INSTALL_DIR/java
 ENV CATALINA_HOME $FIBONACCI_INSTALL_DIR/tomcat
@@ -20,21 +20,17 @@ COPY xlib/tomcat_8.5.35 ${CATALINA_HOME}/
 RUN chmod +x ${CATALINA_HOME}/bin/*.sh
 
 # Create tomcat user
-#RUN addgroup -S tomcat && \
- #adduser -G tomcat -h ${CATALINA_HOME} -S  -g "Tomcat user" tomcat && \
- #chown -R tomcat:tomcat ${CATALINA_HOME} ${JAVA_HOME}  /var/opt/nextlabs/ && \
- #chmod u+w ${JAVA_HOME}/lib/security/cacerts
 RUN groupadd -r tomcat && \
   useradd -g tomcat -d ${CATALINA_HOME} -s /sbin/nologin  -c "Tomcat user" tomcat && \
   chown -R tomcat:tomcat ${CATALINA_HOME} ${JAVA_HOME} && \
   chmod u+w ${JAVA_HOME}/lib/security/cacerts
-RUN  chmod -R 755 /var/opt/nextlabs/
+RUN  chmod -R 755 /var/opt/oracle/
 
-COPY docker/logger/tomcat/conf/ $CATALINA_HOME/conf/
-COPY docker/logger/tomcat/bin/ $CATALINA_HOME/bin/
-COPY build/libs/logger.war  ${CATALINA_HOME}/webapps
-EXPOSE 8443
-COPY docker/logger/entrypoint.sh /
+COPY docker/fibonacci/tomcat/conf/ $CATALINA_HOME/conf/
+COPY docker/fibonacci/tomcat/bin/ $CATALINA_HOME/bin/
+COPY build/libs/fibonacci.war  ${CATALINA_HOME}/webapps
+EXPOSE 8000
+COPY docker/fibonacci/entrypoint.sh /
 RUN chmod 755 /entrypoint.sh
 
 USER tomcat
