@@ -34,11 +34,7 @@ repositories {
 	}
 	maven {
 		url "https://www.oracle.com/content/secure/maven/content"
-		credentials {
-			username = 'nextlabsdev@gmail.com'
-			password = '123Blue!'
 		}
-	}
 }
 
 dependencies {
