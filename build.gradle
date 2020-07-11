@@ -1,19 +1,44 @@
 plugins {
-	id 'org.springframework.boot' version '2.4.0-SNAPSHOT'
+	id 'org.springframework.boot' version '2.3.1.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
+	id "com.diffplug.gradle.spotless" version "3.24.2"
 	id 'war'
+	id "com.github.spotbugs" version "4.4.4"
 }
 
 group = 'com.oracle.challenge'
-version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
-targetCompatibility = 1.8
+targetCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
 	maven { url 'https://repo.spring.io/milestone' }
 	maven { url 'https://repo.spring.io/snapshot' }
+}
+
+apply plugin: 'checkstyle'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'pmd'
+
+war {
+	archiveName 'fibonacci.war'
+	dependsOn jar
+}
+repositories {
+	mavenCentral()
+	mavenCentral()
+	maven {
+		url "http://maven.restlet.org"
+	}
+	maven {
+		url "https://www.oracle.com/content/secure/maven/content"
+		credentials {
+			username = 'nextlabsdev@gmail.com'
+			password = '123Blue!'
+		}
+	}
 }
 
 dependencies {
@@ -28,3 +53,57 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+ext {
+	cfgDir = "$rootProject.rootDir/config"
+	buildDir = "$rootProject.rootDir/build"
+}
+
+checkstyle {
+	toolVersion '6.9'
+	configFile file("config/checkstyle/checkstyle.xml")
+	configProperties = [ "checkstyle.suppressions.file" : file("$cfgDir/checkstyle/suppressions.xml")]
+	ignoreFailures = false
+}
+tasks.withType(Checkstyle) {
+	reports {
+		xml.enabled false
+		html.enabled true
+		html.stylesheet resources.text.fromFile("$cfgDir/checkstyle/checkstyle.xsl")
+		html.destination file("$buildDir/checkstyle.html")
+	}
+}
+
+
+configurations {
+	formatter
+}
+
+
+spotless {
+	java {
+		importOrder 'com','io', 'java',  'javax', 'net', 'noNamespace','org', ''
+		eclipse().configFile "$cfgDir/formatter/conventions.xml"
+	}
+}
+
+task formatJava (dependsOn: ['spotlessJavaApply']) {
+}
+
+task formatXml {
+	doLast {
+		def verify = project.hasProperty('verifyOnly') ? Boolean.valueOf(verifyOnly) : false
+		ant.taskdef(name:'formatXml',
+				classname: 'net.sourceforge.formatter.ant.FormatXmlTask',
+				classpath: configurations.formatter.asPath)
+		ant.formatXml(
+				failOnError: false,
+				verifyOnly: verify) {
+			fileset(dir: 'src')
+		}
+	}
+}
+
+
+task validate (dependsOn: ['spotlessJavaCheck','checkstyleMain']){}
+
