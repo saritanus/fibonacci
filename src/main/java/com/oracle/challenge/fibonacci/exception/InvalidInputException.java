@@ -1,4 +1,4 @@
-package com.oracle.challenge.fibonacci.excpetion;
+package com.oracle.challenge.fibonacci.exception;
 
 public class InvalidInputException extends Exception{
     private static final long serialVersionUID = 3620980532720315841L;

@@ -2,10 +2,8 @@ package com.oracle.challenge.fibonacci.utility;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
 import java.io.IOException;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class ResultMatcher {
     private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
