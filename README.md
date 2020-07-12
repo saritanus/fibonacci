@@ -39,3 +39,23 @@ conditions:
 * Given a number more than 100, it responds with a status code of 400 and an error message
  
   **Number elements are greater than the maximum value 100. [108]**
+  
+  ## Installation
+
+* Clone this [Git Repository](https://github.com/saritanus/fibonacci.git)
+* Execute the following code to run in an embedded tomcat server
+
+```command
+ ./gradle clean bootrun 
+```
+* Execute the following code to run in an external tomcat server
+
+```command
+ ./gradle clean bootwar
+```
+* Execute the following code to validate if you have done any changes in the code
+```command
+ ./gradle formatjava validate
+```
+**NOTE**
+JUnit and Mockito has been implemented for unit and REST API testing.
