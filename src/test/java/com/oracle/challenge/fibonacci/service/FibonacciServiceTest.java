@@ -3,6 +3,8 @@ package com.oracle.challenge.fibonacci.service;
 import com.oracle.challenge.fibonacci.exception.InvalidInputException;
 import com.oracle.challenge.fibonacci.model.FibonacciResponse;
 
+import java.math.BigInteger;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 
@@ -22,8 +24,13 @@ class FibonacciServiceTest {
 	@Test
 	void getFibonacciSequenceWith10() throws InvalidInputException {
 		FibonacciResponse expected = new FibonacciResponse();
-		expected.setFibonacci(new long[]{0, 1, 1, 2, 3, 5, 8, 13, 21, 34});
-		expected.setSorted(new long[]{34, 8, 2, 0, 21, 13, 5, 3, 1, 1});
+		BigInteger[] list = new BigInteger[]{BigInteger.ZERO, BigInteger.ONE, BigInteger.ONE, BigInteger.valueOf(2),
+				BigInteger.valueOf(3), BigInteger.valueOf(5), BigInteger.valueOf(8), BigInteger.valueOf(13), BigInteger.valueOf(21),
+				BigInteger.valueOf(34)};
+		BigInteger[] sorted = new BigInteger[]{BigInteger.valueOf(34), BigInteger.valueOf(8), BigInteger.valueOf(2), BigInteger.valueOf(0),
+				BigInteger.valueOf(21), BigInteger.valueOf(13), BigInteger.valueOf(5), BigInteger.valueOf(3), BigInteger.valueOf(1), BigInteger.valueOf(1)};
+		expected.setFibonacci(list);
+		expected.setSorted(sorted);
 		FibonacciResponse result = FibonacciService.getFibonacciSequence(10);
 		Assert.assertArrayEquals(expected.getFibonacci(), result.getFibonacci());
 		Assert.assertArrayEquals(expected.getSorted(), result.getSorted());
@@ -48,8 +55,8 @@ class FibonacciServiceTest {
 	@Test
 	void getFibonacciSequenceWith1() throws InvalidInputException {
 		FibonacciResponse expected = new FibonacciResponse();
-		expected.setFibonacci(new long[]{0});
-		expected.setSorted(new long[]{0});
+		expected.setFibonacci(new BigInteger[]{BigInteger.ZERO});
+		expected.setSorted(new BigInteger[]{BigInteger.ZERO});
 		FibonacciResponse result = FibonacciService.getFibonacciSequence(1);
 		Assert.assertArrayEquals(expected.getFibonacci(), result.getFibonacci());
 		Assert.assertArrayEquals(expected.getSorted(), result.getSorted());

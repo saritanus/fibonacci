@@ -1,29 +1,31 @@
 package com.oracle.challenge.fibonacci.model;
 
-public class FibonacciResponse {
-	private long[] fibonacci;
-	private long[] sorted;
+import java.math.BigInteger;
 
-	public FibonacciResponse(long[] fibonacci, long[] sorted) {
+public class FibonacciResponse {
+	private BigInteger[] fibonacci;
+	private BigInteger[] sorted;
+
+	public FibonacciResponse(BigInteger[] fibonacci, BigInteger[] sorted) {
 		this.fibonacci = fibonacci;
 		this.sorted = sorted;
 	}
 
 	public FibonacciResponse() {}
 
-	public long[] getFibonacci() {
+	public BigInteger[] getFibonacci() {
 		return fibonacci;
 	}
 
-	public void setFibonacci(long[] fibonacci) {
+	public void setFibonacci(BigInteger[] fibonacci) {
 		this.fibonacci = fibonacci;
 	}
 
-	public long[] getSorted() {
+	public BigInteger[] getSorted() {
 		return sorted;
 	}
 
-	public void setSorted(long[] sorted) {
+	public void setSorted(BigInteger[] sorted) {
 		this.sorted = sorted;
 	}
 }

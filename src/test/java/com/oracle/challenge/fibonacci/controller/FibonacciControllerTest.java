@@ -56,9 +56,9 @@ class FibonacciControllerTest {
 	}
 
 	@Test
-	void generateSeries100() throws Exception {
-		String json = "{\"elements\":100}";
-		String expected = String.format("Number elements is greater than maximum value %d. [%d]", FibonacciService.MAX_ELEMENTS, 100);
+	void generateSeries101() throws Exception {
+		String json = "{\"elements\":101}";
+		String expected = String.format("Number elements is greater than maximum value %d. [%d]", FibonacciService.MAX_ELEMENTS, 101);
 		final String contentAsString = mockMvc.perform(MockMvcRequestBuilders.post("/fibonacci")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(json))

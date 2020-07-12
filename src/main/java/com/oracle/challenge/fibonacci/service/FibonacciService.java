@@ -3,6 +3,7 @@ package com.oracle.challenge.fibonacci.service;
 import com.oracle.challenge.fibonacci.exception.InvalidInputException;
 import com.oracle.challenge.fibonacci.model.FibonacciResponse;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -18,7 +19,7 @@ import java.util.List;
 public final class FibonacciService {
 
 	public static final int MIN_ELEMENTS = 1;
-	public static final int MAX_ELEMENTS = 93;
+	public static final int MAX_ELEMENTS = 100;
 
 	private FibonacciService() {}
 
@@ -30,17 +31,17 @@ public final class FibonacciService {
 	 */
 	public static FibonacciResponse getFibonacciSequence(int noElement) throws InvalidInputException {
 		FibonacciResponse response = new FibonacciResponse();
-		long[] series;
-		long a = 0;
-		long b = 1;
-		long c;
+		BigInteger[] series;
+		BigInteger a = BigInteger.valueOf(0);
+		BigInteger b = BigInteger.valueOf(1);
+		BigInteger c;
 
 		if (noElement < MIN_ELEMENTS) {
 			throw new InvalidInputException(5001, String.format("Number elements is less than minimum value %d. [%d]", MIN_ELEMENTS, noElement));
 		} else if (noElement > MAX_ELEMENTS) {
 			throw new InvalidInputException(5002, String.format("Number elements is greater than maximum value %d. [%d]", MAX_ELEMENTS, noElement));
 		} else {
-			series = new long[noElement];
+			series = new BigInteger[noElement];
 			if (noElement == 1) {
 				series[0] = a;
 			} else if (noElement == 2) {
@@ -51,7 +52,7 @@ public final class FibonacciService {
 				series[1] = b;
 				int i = 2;
 				while (i < noElement) {
-					c = a + b;
+					c = a.add(b);
 					series[i] = c;
 					a = b;
 					b = c;
@@ -70,12 +71,12 @@ public final class FibonacciService {
 	 * @param input unsorted fibonacci array
 	 * @return sorted array in a descending order where even number comes first
 	 */
-	private static long[] getSortedFibonacciSequence(long[] input) {
-		List<Long> even = new ArrayList<>();
-		List<Long> odd = new ArrayList<>();
-		long[] sorted = new long[input.length];
-		for (long number : input) {
-			if (number % 2 == 0) {
+	private static BigInteger[] getSortedFibonacciSequence(BigInteger[] input) {
+		List<BigInteger> even = new ArrayList<>();
+		List<BigInteger> odd = new ArrayList<>();
+		BigInteger[] sorted = new BigInteger[input.length];
+		for (BigInteger number : input) {
+			if (number.mod(BigInteger.valueOf(2)) == BigInteger.ZERO) {
 				even.add(number);
 			} else {
 				odd.add(number);
