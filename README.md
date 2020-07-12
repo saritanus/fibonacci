@@ -104,4 +104,9 @@ docker service ls
 
 ```
 8. Check that you can access the REST API. The script creates the URL to access  For example: https:// <hostname>:8000/fibonacci/
+	
+# 3. Accessing REST API on cloud
+
+[FIBONACCI REST API](http://140.238.194.53:8000/fibonacci/fibonacci)
+
 
